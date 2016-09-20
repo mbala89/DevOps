@@ -1,0 +1,155 @@
+Packer:
+
+ Install- https://www.packer.io/downloads.html
+ https://github.com/shiguredo/packer-templates/blob/develop/centos-7.1/template.json
+
+AWS CLI:
+
+    http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+
+
+Virtual-box: centos7 user& password:
+
+Username: osboxes
+Password: osboxes.org
+
+
+Docker:
+
+   Docker-1.12 installartion:
+
+       https://docs.docker.com/engine/installation/linux/centos/
+
+     Docker-compose-18.0 installation:
+
+   	https://github.com/docker/compose/releases
+
+ Remove the stopped contanier :
+     
+     docker rm $( docker ps -q -f status=exited)
+     docker images --no-trunc -aqf "dangling=true" | xargs docker rmi
+
+
+
+Ruby:
+
+    Check syntax: erb -x -T  '-' file.erb  | ruby -c
+
+   Install: (Install Ruby on Rails with rbenv on CentOS 7 or RHEL 7)
+
+   https://syslint.com/blog/tutorial/how-to-install-ruby-on-rails-with-rbenv-on-centos-7-or-rhel-7/
+   gem install bundgem
+
+
+
+YAML:
+
+    Check syntax: http://www.yamllint.com/
+    Encrype the text :
+
+     eyaml encrypt -p
+
+    Decrypt the text:
+
+     eyaml decrypt -s 'ENC[PKCS7 ***]'
+
+      Create a file /root/.eyaml/config.yaml
+      and paste this content
+---
+pkscs7_public_key: �/root/.keys/public_key.pkcs7.pem�
+
+GIT:
+
+    git config --global user.name "Balamurugan.Mariyappan"
+    git config --global user.email "balamurugan.mariyappan@findly.com"
+    git config --global  alias.graph "log --graph --all --decorate"
+    git config --global color.ui auto
+    git log --oneline --decorate
+    git config --global alias.co "checkout"
+    git config --global alias.br "branch"
+    git config --global alias.cob "checkout -b"
+    
+
+Pick the particular command:
+
+   git checkout EPS-126/Enable_ntpservice_oncentos7
+   git reset --hard origin/master
+   git cherry-pick 8245cf763
+
+YUM:
+
+    yum history list all
+    yum history info <tranction-id>
+
+
+Command line tricks:
+
+      find instances for a product (eg waggle):
+
+     aws ec2 describe-instances --filters Name=tag:Product,Values=product
+      get ip adresses for instances:
+
+     jq '.Reservations[] | .Instances[] | { ip: .PrivateIpAddress, name: .Tags
+| map(select(.Key == "Name"))[] | .Value, env: .Tags | map(select(.Key ==
+"Environment"))[] | .Value }' < aws-ec2-describe-instances-output.json
+
+    add public key to machines:
+
+      echo '10.55.103.111
+      10.55.103.112
+      10.55.99.49' | xargs -I{} ssh-copy-id -f -i ~/.ssh/mykey.pub ec2-user@{}
+
+     To turn the above jq output into a list of ip addresses, pipe it into:
+       jq -r '.ip'
+
+Serverspec:
+
+  https://atom.io/packages/serverspec-snippet
+  http://burtlo.github.io/serverspec.github.io/resource_types.html
+  https://vincent.bernat.im/en/blog/2014-serverspec-test-infrastructure.html
+  https://debian-administration.org/article/703/A_brief_introduction_to_server-testing_with_serverspec
+
+SeLinux:
+
+  setsebool httpd_can_network_connect 1 -P
+
+Virtualbox & vagrant install on centos7:
+     http://tecadmin.net/install-oracle-virtualbox-on-centos-redhat-and-fedora/#
+     http://www.installvirtual.com/install-vagrant-on-centos-7/
+
+
+  "iso":
+"http://centos.mirrors.hoobly.com/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+    "checksum": "88c0437f0a14c6e2c94426df9d43cd67"
+  },
+
+Jenkins with CD:
+
+   http://udaypal.com/jenkins-workflow-getting-started/
+
+
+Dotfile-setup:
+
+ 1. clone the nathan repo- https://github.com/BalamuruganMariyappan/dotfiles
+ 2. Copy the extracted folder to your home folder
+ 3. run install-dependencies.sh and then run install.sh
+ 4. now open the vim editor and type :PlugInstall( This is will install the
+all plugin)
+
+
+Centos7:
+
+   Enbale eth0:http://carminebufano.com/?p=108
+
+
+vagrant:
+
+   Puppet:
+
+       puppet  apply --test --debug  --manifestdir /puppet/manifests
+--modulepath /puppet/modules  --hiera_config /puppet/hiera.yaml
+/puppet/manifests/site.pp
+
+
+
+
